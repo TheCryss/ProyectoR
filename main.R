@@ -243,6 +243,7 @@ crearGrafico <- function(tf,color1,color2,color3,titulo){
     geom_bar(stat = "identity", position = "dodge", colour=color3, fill=c(color2,color2,color1,color1)) +
     ylab("Cantidad") +
     xlab("Niveles") +
+    scale_y_continuous(breaks = seq(0,11,1)) +
     geom_text(aes(label=paste0(round(fi,1),"%")),vjust=-0.5) +
     theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold")) 
   return(g)
