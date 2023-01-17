@@ -289,7 +289,7 @@ tf3 <- crearTablaFrecuencia(alto3,medio_alto3,medio_bajo3,bajo3,grupo3)
 
 # Gráfico
 x11()
-crearGrafico(tf3,"#b878f4","#cabbf2","purple","Grupo 3 - EO_NA_JAPON_AUSTR_NZ")
+crearGrafico(tf3,"#ed9436","#f2a757","#f08310","Grupo 3 - EO_NA_JAPON_AUSTR_NZ")
 
 #-------------------------------------------------------------------------------------------------------
 
@@ -331,4 +331,4 @@ tf6 <- crearTablaFrecuencia(alto6,medio_alto6,medio_bajo6,bajo6,grupo6)
 
 # Gráfico
 x11()
-crearGrafico(tf6,"#009966","#49ca9f","#12694c","Grupo 6 - África")
+crearGrafico(tf6,"#ed9436","#f5b067","#f08310","Grupo 6 - África")
