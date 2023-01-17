@@ -238,9 +238,9 @@ crearTablaFrecuencia <- function(alto, medio_alto, medio_bajo, bajo, grupo){
 }
 
 # --- Función que crea gráficos específicos para este proyecto ---
-crearGrafico <- function(tf,color1,color2,color3){
+crearGrafico <- function(tf,color1,color2,color3,titulo){
   g <- ggplot(tf, aes(x = nivel, y = fi)) +
-    ggtitle("Grupo 1 - Europa Oriental") +
+    ggtitle(titulo) +
     geom_bar(stat = "identity", position = "dodge", colour=color3, fill=c(color1,color2,color2,color1)) +
     ylab("Porcentajes (%)") +
     xlab("Niveles") +
@@ -262,7 +262,7 @@ tf1 <- crearTablaFrecuencia(alto1,medio_alto1,medio_bajo1,bajo1,grupo1)
 
 # Gráfico
 x11()
-crearGrafico(tf1,"#b878f4","#cabbf2","purple")
+crearGrafico(tf1,"#b878f4","#cabbf2","purple","Grupo 1 - Europa Oriental")
 
 #-------------------------------------------------------------------------------------------------------
 
@@ -276,7 +276,7 @@ tf2 <- crearTablaFrecuencia(alto2,medio_alto2,medio_bajo2,bajo2,grupo2)
 
 # Gráfico
 x11()
-crearGrafico(tf2,"#009966","#49ca9f","#12694c")
+crearGrafico(tf2,"#009966","#49ca9f","#12694c","Grupo 2 - Iberoamérica")
 
 #-------------------------------------------------------------------------------------------------------
 
@@ -290,7 +290,7 @@ tf3 <- crearTablaFrecuencia(alto3,medio_alto3,medio_bajo3,bajo3,grupo3)
 
 # Gráfico
 x11()
-crearGrafico(tf3,"#b878f4","#cabbf2","purple")
+crearGrafico(tf3,"#b878f4","#cabbf2","purple","Grupo 3 - EO_NA_JAPON_AUSTR_NZ")
 
 #-------------------------------------------------------------------------------------------------------
 
@@ -304,7 +304,7 @@ tf4 <- crearTablaFrecuencia(alto4,medio_alto4,medio_bajo4,bajo4,grupo4)
 
 # Gráfico
 x11()
-crearGrafico(tf4,"#009966","#49ca9f","#12694c")
+crearGrafico(tf4,"#009966","#49ca9f","#12694c","Grupo 4 - Oriente Medio")
 
 #-------------------------------------------------------------------------------------------------------
 
@@ -318,7 +318,7 @@ tf5 <- crearTablaFrecuencia(alto5,medio_alto5,medio_bajo5,bajo5,grupo5)
 
 # Gráfico
 x11()
-crearGrafico(tf5,"#b878f4","#cabbf2","purple")
+crearGrafico(tf5,"#b878f4","#cabbf2","purple","Grupo 5 - Asia")
 
 #-------------------------------------------------------------------------------------------------------
 
@@ -332,4 +332,4 @@ tf6 <- crearTablaFrecuencia(alto6,medio_alto6,medio_bajo6,bajo6,grupo6)
 
 # Gráfico
 x11()
-crearGrafico(tf6,"#009966","#49ca9f","#12694c")
+crearGrafico(tf6,"#009966","#49ca9f","#12694c","Grupo 6 - Africa")
