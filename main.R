@@ -332,4 +332,4 @@ tf6 <- crearTablaFrecuencia(alto6,medio_alto6,medio_bajo6,bajo6,grupo6)
 
 # Gráfico
 x11()
-crearGrafico(tf6,"#009966","#49ca9f","#12694c","Grupo 6 - Africa")
+crearGrafico(tf6,"#009966","#49ca9f","#12694c","Grupo 6 - África")
