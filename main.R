@@ -159,7 +159,6 @@ boxplot( my_data_ImputM$Tasa.natalidad, my_data_ImputM$Tasa.mortalidad, my_data_
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
 my_new_data <- dplyr::mutate(my_data_ImputM,
-                             #Si la edad es mayor a la media -> mayor
                              `PNB per cápita` = PNB/Población..miles.)
 
 x11()
