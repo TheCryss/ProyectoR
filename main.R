@@ -225,7 +225,7 @@ medio_bajo1 <-calcularNivel(Medio_Bajo, grupo1$País)
 medio_alto1 <- calcularNivel(Medio_Alto, grupo1$País)
 alto1 <- calcularNivel(Alto, grupo1$País)
 
-# Gráfico
+# Tabla de frecuencia
 tf1 <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
                   ni = c(alto1,medio_alto1,medio_bajo1,bajo1),
                   fi = c( (alto1/length(grupo1$País))*100,
@@ -238,7 +238,7 @@ tf1 <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
                           (alto1/length(grupo1$País))*100+(medio_alto1/length(grupo1$País))*100+(medio_bajo1/length(grupo1$País))*100,
                           (alto1/length(grupo1$País))*100+(medio_alto1/length(grupo1$País))*100+(medio_bajo1/length(grupo1$País))*100+(bajo1/length(grupo1$País))*100))
 
-
+# Gráfico
 x11()
 ggplot(tf1, aes(x = nivel, y = fi)) +
   ggtitle("Grupo 1 - Europa Oriental") +
@@ -255,7 +255,7 @@ medio_bajo2 <-calcularNivel(Medio_Bajo, grupo2$País)
 medio_alto2 <- calcularNivel(Medio_Alto, grupo2$País)
 alto2 <- calcularNivel(Alto, grupo2$País)
 
-#Gráfico
+# Tabla de frecuencia
 tf2 <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
                   ni = c(alto2,medio_alto2,medio_bajo2,bajo2),
                   fi = c( (alto2/length(grupo2$País))*100,
@@ -268,8 +268,7 @@ tf2 <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
                           (alto2/length(grupo2$País))*100+(medio_alto2/length(grupo2$País))*100+(medio_bajo2/length(grupo2$País))*100,
                           (alto2/length(grupo2$País))*100+(medio_alto2/length(grupo2$País))*100+(medio_bajo2/length(grupo2$País))*100+(bajo2/length(grupo2$País))*100))
 
-
-
+# Gráfico
 x11()
 ggplot(tf2, aes(x = nivel, y = fi)) +
   ggtitle("Grupo 2 - Iberoamerica") +
@@ -286,7 +285,7 @@ medio_bajo3 <-calcularNivel(Medio_Bajo, grupo3$País)
 medio_alto3 <- calcularNivel(Medio_Alto, grupo3$País)
 alto3 <- calcularNivel(Alto, grupo3$País)
 
-#Gráfico
+# Tabla de frecuencia
 tf3 <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
                   ni = c(alto3,medio_alto3,medio_bajo3,bajo3),
                   fi = c( (alto3/length(grupo3$País))*100,
@@ -299,6 +298,7 @@ tf3 <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
                           (alto3/length(grupo3$País))*100+(medio_alto3/length(grupo3$País))*100+(medio_bajo3/length(grupo3$País))*100,
                           (alto3/length(grupo3$País))*100+(medio_alto3/length(grupo3$País))*100+(medio_bajo3/length(grupo3$País))*100+(bajo3/length(grupo3$País))*100))
 
+# Gráfico
 x11()
 ggplot(tf3, aes(x = nivel, y = fi)) +
   ggtitle("Grupo 3 - EO_NA_JAPON_AUSTR_NZ") +
@@ -315,7 +315,7 @@ medio_bajo4 <-calcularNivel(Medio_Bajo, grupo4$País)
 medio_alto4 <- calcularNivel(Medio_Alto, grupo4$País)
 alto4 <- calcularNivel(Alto, grupo4$País)
 
-#Gráfico
+# Tabla de frecuencia
 tf4 <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
                   ni = c(alto4,medio_alto4,medio_bajo4,bajo4),
                   fi = c( (alto4/length(grupo4$País))*100,
@@ -328,6 +328,7 @@ tf4 <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
                           (alto4/length(grupo4$País))*100+(medio_alto4/length(grupo4$País))*100+(medio_bajo4/length(grupo4$País))*100,
                           (alto4/length(grupo4$País))*100+(medio_alto4/length(grupo4$País))*100+(medio_bajo4/length(grupo4$País))*100+(bajo4/length(grupo4$País))*100))
 
+# Gráfico
 x11()
 ggplot(tf4, aes(x = nivel, y = fi)) +
   ggtitle("Grupo 4 - Oriente Medio") +
@@ -344,7 +345,7 @@ medio_bajo5 <-calcularNivel(Medio_Bajo, grupo5$País)
 medio_alto5 <- calcularNivel(Medio_Alto, grupo5$País)
 alto5 <- calcularNivel(Alto, grupo5$País)
 
-#Gráfico
+# Tabla de frecuencia
 tf5 <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
                   ni = c(alto5,medio_alto5,medio_bajo5,bajo5),
                   fi = c( (alto5/length(grupo5$País))*100,
@@ -357,6 +358,7 @@ tf5 <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
                           (alto5/length(grupo5$País))*100+(medio_alto5/length(grupo5$País))*100+(medio_bajo5/length(grupo5$País))*100,
                           (alto5/length(grupo5$País))*100+(medio_alto5/length(grupo5$País))*100+(medio_bajo5/length(grupo5$País))*100+(bajo5/length(grupo5$País))*100))
 
+# Gráfico
 x11()
 ggplot(tf5, aes(x = nivel, y = fi)) +
   ggtitle("Grupo 5 - Asia") +
@@ -373,7 +375,7 @@ medio_bajo6 <-calcularNivel(Medio_Bajo, grupo6$País)
 medio_alto6 <- calcularNivel(Medio_Alto, grupo6$País)
 alto6 <- calcularNivel(Alto, grupo6$País)
 
-#Gráfico
+# Tabla de frecuencia
 tf6 <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
                   ni = c(alto6,medio_alto6,medio_bajo6,bajo6),
                   fi = c( (alto2/length(grupo6$País))*100,
@@ -386,6 +388,7 @@ tf6 <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
                           (alto6/length(grupo6$País))*100+(medio_alto6/length(grupo6$País))*100+(medio_bajo6/length(grupo6$País))*100,
                           (alto6/length(grupo6$País))*100+(medio_alto6/length(grupo6$País))*100+(medio_bajo6/length(grupo6$País))*100+(bajo6/length(grupo6$País))*100))
 
+# Gráfico
 x11()
 ggplot(tf6, aes(x = nivel, y = fi)) +
   ggtitle("Grupo 6 - África") +
