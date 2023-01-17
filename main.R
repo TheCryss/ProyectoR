@@ -203,6 +203,9 @@ grupo4 <- dplyr::filter(grupos, Grupo == 4)
 grupo5 <- dplyr::filter(grupos, Grupo == 5)
 grupo6 <- dplyr::filter(grupos, Grupo == 6)
 
+# -------------------------------------- FUNCIONES -------------------------------------- 
+# =======================================================================================
+
 # --- Función que calcula la cantidad de valores iguales en dos arreglos ---
 calcularNivel <- function(vectornivel,vectorgrupo){
   sum <- 0
@@ -216,37 +219,50 @@ calcularNivel <- function(vectornivel,vectorgrupo){
   return(sum)
 }
 
+# --- Función que crea tablas de frecuencia para este caso en específico ---
+crearTablaFrecuencia <- function(alto, medio_alto, medio_bajo, bajo, grupo){
+  tf <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
+                   ni = c(alto,medio_alto,medio_bajo,bajo),
+                   fi = c( (alto/length(grupo$País))*100,
+                           (medio_alto/length(grupo$País))*100,
+                           (medio_bajo/length(grupo$País))*100,
+                           (bajo/length(grupo$País))*100),
+                   Ni = c( alto, alto+medio_alto, alto+medio_alto+medio_bajo, alto+medio_alto+medio_bajo+bajo),
+                   Fi = c( (alto/length(grupo$País))*100,
+                           (alto/length(grupo$País))*100+(medio_alto/length(grupo$País))*100,
+                           (alto/length(grupo$País))*100+(medio_alto/length(grupo$País))*100+(medio_bajo/length(grupo$País))*100,
+                           (alto/length(grupo$País))*100+(medio_alto/length(grupo$País))*100+(medio_bajo/length(grupo$País))*100+(bajo/length(grupo$País))*100))
+  
+  return(tf)
+  
+}
+
+# --- Función que crea gráficos específicos para esta función ---
+crearGrafico <- function(tf,color1,color2,color3){
+  g <- ggplot(tf, aes(x = nivel, y = fi)) +
+    ggtitle("Grupo 1 - Europa Oriental") +
+    geom_bar(stat = "identity", position = "dodge", colour=color3, fill=c(color1,color2,color2,color1)) +
+    ylab("Porcentajes (%)") +
+    xlab("Niveles") +
+    geom_text(aes(label=paste0(round(fi,1),"%")),vjust=-0.5) +
+    theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold")) 
+  return(g)
+}
 
 #-------------------------------------------------------------------------------------------------------
 
-#Haciendo uso de la función establecida anteriormente para obtener el porcentaje de los 4 niveles en cada grupo
+# --- Haciendo uso de la función establecida anteriormente para obtener el porcentaje de los 4 niveles en cada grupo
 bajo1 <- calcularNivel (Bajo, grupo1$País)
 medio_bajo1 <-calcularNivel(Medio_Bajo, grupo1$País)
 medio_alto1 <- calcularNivel(Medio_Alto, grupo1$País)
 alto1 <- calcularNivel(Alto, grupo1$País)
 
 # Tabla de frecuencia
-tf1 <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
-                  ni = c(alto1,medio_alto1,medio_bajo1,bajo1),
-                  fi = c( (alto1/length(grupo1$País))*100,
-                          (medio_alto1/length(grupo1$País))*100,
-                          (medio_bajo1/length(grupo1$País))*100,
-                          (bajo1/length(grupo1$País))*100),
-                  Ni = c( alto1, alto1+medio_alto1, alto1+medio_alto1+medio_bajo1, alto1+medio_alto1+medio_bajo1+bajo1),
-                  Fi = c( (alto1/length(grupo1$País))*100,
-                          (alto1/length(grupo1$País))*100+(medio_alto1/length(grupo1$País))*100,
-                          (alto1/length(grupo1$País))*100+(medio_alto1/length(grupo1$País))*100+(medio_bajo1/length(grupo1$País))*100,
-                          (alto1/length(grupo1$País))*100+(medio_alto1/length(grupo1$País))*100+(medio_bajo1/length(grupo1$País))*100+(bajo1/length(grupo1$País))*100))
+tf1 <- crearTablaFrecuencia(alto1,medio_alto1,medio_bajo1,bajo1,grupo1)
 
 # Gráfico
 x11()
-ggplot(tf1, aes(x = nivel, y = fi)) +
-  ggtitle("Grupo 1 - Europa Oriental") +
-  geom_bar(stat = "identity", position = "dodge", colour="purple", fill=c("#b878f4","#cabbf2","#cabbf2","#b878f4")) +
-  ylab("Porcentajes (%)") +
-  xlab("Niveles") +
-  geom_text(aes(label=paste0(round(fi,1),"%")),vjust=-0.5) +
-  theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold")) 
+crearGrafico(tf1,"#b878f4","#cabbf2","purple")
 
 #-------------------------------------------------------------------------------------------------------
 
@@ -256,27 +272,11 @@ medio_alto2 <- calcularNivel(Medio_Alto, grupo2$País)
 alto2 <- calcularNivel(Alto, grupo2$País)
 
 # Tabla de frecuencia
-tf2 <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
-                  ni = c(alto2,medio_alto2,medio_bajo2,bajo2),
-                  fi = c( (alto2/length(grupo2$País))*100,
-                          (medio_alto2/length(grupo2$País))*100,
-                          (medio_bajo2/length(grupo2$País))*100,
-                          (bajo2/length(grupo2$País))*100),
-                  Ni = c( alto2, alto2+medio_alto2, alto2+medio_alto2+medio_bajo2, alto2+medio_alto2+medio_bajo2+bajo2),
-                  Fi = c( (alto2/length(grupo2$País))*100,
-                          (alto2/length(grupo2$País))*100+(medio_alto2/length(grupo2$País))*100,
-                          (alto2/length(grupo2$País))*100+(medio_alto2/length(grupo2$País))*100+(medio_bajo2/length(grupo2$País))*100,
-                          (alto2/length(grupo2$País))*100+(medio_alto2/length(grupo2$País))*100+(medio_bajo2/length(grupo2$País))*100+(bajo2/length(grupo2$País))*100))
+tf2 <- crearTablaFrecuencia(alto2,medio_alto2,medio_bajo2,bajo2,grupo2)
 
 # Gráfico
 x11()
-ggplot(tf2, aes(x = nivel, y = fi)) +
-  ggtitle("Grupo 2 - Iberoamerica") +
-  geom_bar(stat = "identity", position = "dodge", colour="#12694c", fill=c("#009966","#49ca9f","#49ca9f","#009966")) +
-  ylab("Porcentajes (%)") +
-  xlab("Niveles") +
-  geom_text(aes(label=paste0(round(fi,1),"%")),vjust=-0.5) +
-  theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold")) 
+crearGrafico(tf2,"#009966","#49ca9f","#12694c")
 
 #-------------------------------------------------------------------------------------------------------
 
@@ -286,27 +286,11 @@ medio_alto3 <- calcularNivel(Medio_Alto, grupo3$País)
 alto3 <- calcularNivel(Alto, grupo3$País)
 
 # Tabla de frecuencia
-tf3 <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
-                  ni = c(alto3,medio_alto3,medio_bajo3,bajo3),
-                  fi = c( (alto3/length(grupo3$País))*100,
-                          (medio_alto3/length(grupo3$País))*100,
-                          (medio_bajo3/length(grupo3$País))*100,
-                          (bajo3/length(grupo3$País))*100),
-                  Ni = c( alto3, alto3+medio_alto3, alto3+medio_alto3+medio_bajo3, alto3+medio_alto3+medio_bajo3+bajo3),
-                  Fi = c( (alto3/length(grupo3$País))*100,
-                          (alto3/length(grupo3$País))*100+(medio_alto3/length(grupo3$País))*100,
-                          (alto3/length(grupo3$País))*100+(medio_alto3/length(grupo3$País))*100+(medio_bajo3/length(grupo3$País))*100,
-                          (alto3/length(grupo3$País))*100+(medio_alto3/length(grupo3$País))*100+(medio_bajo3/length(grupo3$País))*100+(bajo3/length(grupo3$País))*100))
+tf3 <- crearTablaFrecuencia(alto3,medio_alto3,medio_bajo3,bajo3,grupo3)
 
 # Gráfico
 x11()
-ggplot(tf3, aes(x = nivel, y = fi)) +
-  ggtitle("Grupo 3 - EO_NA_JAPON_AUSTR_NZ") +
-  geom_bar(stat = "identity", position = "dodge", colour="purple", fill=c("#b878f4","#cabbf2","#cabbf2","#b878f4")) +
-  ylab("Porcentajes (%)") +
-  xlab("Niveles") +
-  geom_text(aes(label=paste0(round(fi,1),"%")),vjust=-0.5) +
-  theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold"))
+crearGrafico(tf3,"#b878f4","#cabbf2","purple")
 
 #-------------------------------------------------------------------------------------------------------
 
@@ -316,27 +300,11 @@ medio_alto4 <- calcularNivel(Medio_Alto, grupo4$País)
 alto4 <- calcularNivel(Alto, grupo4$País)
 
 # Tabla de frecuencia
-tf4 <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
-                  ni = c(alto4,medio_alto4,medio_bajo4,bajo4),
-                  fi = c( (alto4/length(grupo4$País))*100,
-                          (medio_alto4/length(grupo4$País))*100,
-                          (medio_bajo4/length(grupo4$País))*100,
-                          (bajo4/length(grupo4$País))*100),
-                  Ni = c( alto4, alto4+medio_alto4, alto4+medio_alto4+medio_bajo4, alto4+medio_alto4+medio_bajo4+bajo4),
-                  Fi = c( (alto4/length(grupo4$País))*100,
-                          (alto4/length(grupo4$País))*100+(medio_alto4/length(grupo4$País))*100,
-                          (alto4/length(grupo4$País))*100+(medio_alto4/length(grupo4$País))*100+(medio_bajo4/length(grupo4$País))*100,
-                          (alto4/length(grupo4$País))*100+(medio_alto4/length(grupo4$País))*100+(medio_bajo4/length(grupo4$País))*100+(bajo4/length(grupo4$País))*100))
+tf4 <- crearTablaFrecuencia(alto4,medio_alto4,medio_bajo4,bajo4,grupo4)
 
 # Gráfico
 x11()
-ggplot(tf4, aes(x = nivel, y = fi)) +
-  ggtitle("Grupo 4 - Oriente Medio") +
-  geom_bar(stat = "identity", position = "dodge", colour="#12694c", fill=c("#009966","#49ca9f","#49ca9f","#009966")) +
-  ylab("Porcentajes (%)") +
-  xlab("Niveles") +
-  geom_text(aes(label=paste0(round(fi,1),"%")),vjust=-0.5) +
-  theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold"))
+crearGrafico(tf4,"#009966","#49ca9f","#12694c")
 
 #-------------------------------------------------------------------------------------------------------
 
@@ -346,27 +314,11 @@ medio_alto5 <- calcularNivel(Medio_Alto, grupo5$País)
 alto5 <- calcularNivel(Alto, grupo5$País)
 
 # Tabla de frecuencia
-tf5 <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
-                  ni = c(alto5,medio_alto5,medio_bajo5,bajo5),
-                  fi = c( (alto5/length(grupo5$País))*100,
-                          (medio_alto5/length(grupo5$País))*100,
-                          (medio_bajo5/length(grupo5$País))*100,
-                          (bajo5/length(grupo5$País))*100),
-                  Ni = c( alto5, alto5+medio_alto5, alto5+medio_alto5+medio_bajo5, alto5+medio_alto5+medio_bajo5+bajo5),
-                  Fi = c( (alto5/length(grupo5$País))*100,
-                          (alto5/length(grupo5$País))*100+(medio_alto5/length(grupo5$País))*100,
-                          (alto5/length(grupo5$País))*100+(medio_alto5/length(grupo5$País))*100+(medio_bajo5/length(grupo5$País))*100,
-                          (alto5/length(grupo5$País))*100+(medio_alto5/length(grupo5$País))*100+(medio_bajo5/length(grupo5$País))*100+(bajo5/length(grupo5$País))*100))
+tf5 <- crearTablaFrecuencia(alto5,medio_alto5,medio_bajo5,bajo5,grupo5)
 
 # Gráfico
 x11()
-ggplot(tf5, aes(x = nivel, y = fi)) +
-  ggtitle("Grupo 5 - Asia") +
-  geom_bar(stat = "identity", position = "dodge", colour="purple", fill=c("#b878f4","#cabbf2","#cabbf2","#b878f4")) +
-  ylab("Porcentajes (%)") +
-  xlab("Niveles") +
-  geom_text(aes(label=paste0(round(fi,1),"%")),vjust=-0.5) +
-  theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold"))
+crearGrafico(tf5,"#b878f4","#cabbf2","purple")
 
 #-------------------------------------------------------------------------------------------------------
 
@@ -376,24 +328,8 @@ medio_alto6 <- calcularNivel(Medio_Alto, grupo6$País)
 alto6 <- calcularNivel(Alto, grupo6$País)
 
 # Tabla de frecuencia
-tf6 <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
-                  ni = c(alto6,medio_alto6,medio_bajo6,bajo6),
-                  fi = c( (alto2/length(grupo6$País))*100,
-                          (medio_alto6/length(grupo6$País))*100,
-                          (medio_bajo6/length(grupo6$País))*100,
-                          (bajo6/length(grupo6$País))*100),
-                  Ni = c( alto6, alto6+medio_alto6, alto6+medio_alto6+medio_bajo6, alto6+medio_alto6+medio_bajo6+bajo6),
-                  Fi = c( (alto6/length(grupo6$País))*100,
-                          (alto6/length(grupo6$País))*100+(medio_alto6/length(grupo6$País))*100,
-                          (alto6/length(grupo6$País))*100+(medio_alto6/length(grupo6$País))*100+(medio_bajo6/length(grupo6$País))*100,
-                          (alto6/length(grupo6$País))*100+(medio_alto6/length(grupo6$País))*100+(medio_bajo6/length(grupo6$País))*100+(bajo6/length(grupo6$País))*100))
+tf6 <- crearTablaFrecuencia(alto6,medio_alto6,medio_bajo6,bajo6,grupo6)
 
 # Gráfico
 x11()
-ggplot(tf6, aes(x = nivel, y = fi)) +
-  ggtitle("Grupo 6 - África") +
-  geom_bar(stat = "identity", position = "dodge", colour="#12694c", fill=c("#009966","#49ca9f","#49ca9f","#009966")) +
-  ylab("Porcentajes (%)") +
-  xlab("Niveles") +
-  geom_text(aes(label=paste0(round(fi,1),"%")),vjust=-0.5) +
-  theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold"))
+crearGrafico(tf6,"#009966","#49ca9f","#12694c")
