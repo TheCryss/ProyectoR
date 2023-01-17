@@ -190,7 +190,6 @@ Medio_Alto <- my_new_data$País[pos3]
 
 pos4 <- which(PNBPerCapita > quantile(PNBPerCapita, prob=c(0.75)))
 Alto <- my_new_data$País[pos4]
-sort(my_new_data$`PNB per cápita`)
 
 #Cargar librería para poder filtrar y seleccionar
 library(dplyr)
@@ -204,8 +203,8 @@ grupo4 <- dplyr::filter(grupos, Grupo == 4)
 grupo5 <- dplyr::filter(grupos, Grupo == 5)
 grupo6 <- dplyr::filter(grupos, Grupo == 6)
 
-# --- Función que calcula el porcentaje de valores iguales en dos arreglos ---
-porcentaje <- function(vectornivel,vectorgrupo){
+# --- Función que calcula la cantidad de valores iguales en dos arreglos ---
+calcularNivel <- function(vectornivel,vectorgrupo){
   sum <- 0
   for (i in vectornivel){
     for(j in vectorgrupo){
@@ -214,124 +213,184 @@ porcentaje <- function(vectornivel,vectorgrupo){
       }
     }
   }
-  porcentaje <- sum / length(vectorgrupo)
-  return(porcentaje)
+  return(sum)
 }
 
 
 #-------------------------------------------------------------------------------------------------------
 
 #Haciendo uso de la función establecida anteriormente para obtener el porcentaje de los 4 niveles en cada grupo
-bajo1 <- porcentaje (Bajo, grupo1$País)
-medio_bajo1 <-porcentaje(Medio_Bajo, grupo1$País)
-medio_alto1 <- porcentaje(Medio_Alto, grupo1$País)
-alto1 <- porcentaje(Alto, grupo1$País)
+bajo1 <- calcularNivel (Bajo, grupo1$País)
+medio_bajo1 <-calcularNivel(Medio_Bajo, grupo1$País)
+medio_alto1 <- calcularNivel(Medio_Alto, grupo1$País)
+alto1 <- calcularNivel(Alto, grupo1$País)
 
 # Gráfico
-df1 <- data.frame(grupo = c("Alto","Bajo","Medio Bajo","Medio Alto"),
-                  n = c(alto1*100,bajo1*100,medio_bajo1*100,medio_alto1*100))
+tf1 <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
+                  ni = c(alto1,medio_alto1,medio_bajo1,bajo1),
+                  fi = c( (alto1/length(grupo1$País))*100,
+                          (medio_alto1/length(grupo1$País))*100,
+                          (medio_bajo1/length(grupo1$País))*100,
+                          (bajo1/length(grupo1$País))*100),
+                  Ni = c( alto1, alto1+medio_alto1, alto1+medio_alto1+medio_bajo1, alto1+medio_alto1+medio_bajo1+bajo1),
+                  Fi = c( (alto1/length(grupo1$País))*100,
+                          (alto1/length(grupo1$País))*100+(medio_alto1/length(grupo1$País))*100,
+                          (alto1/length(grupo1$País))*100+(medio_alto1/length(grupo1$País))*100+(medio_bajo1/length(grupo1$País))*100,
+                          (alto1/length(grupo1$País))*100+(medio_alto1/length(grupo1$País))*100+(medio_bajo1/length(grupo1$País))*100+(bajo1/length(grupo1$País))*100))
+
 
 x11()
-ggplot(df1, aes(x = grupo, y = n)) +
+ggplot(tf1, aes(x = nivel, y = fi)) +
   ggtitle("Grupo 1 - Europa Oriental") +
   geom_bar(stat = "identity", position = "dodge", colour="purple", fill=c("#b878f4","#cabbf2","#cabbf2","#b878f4")) +
   ylab("Porcentajes (%)") +
   xlab("Niveles") +
-  geom_text(aes(label=paste0(round(n,1),"%")),vjust=-0.5) +
+  geom_text(aes(label=paste0(round(fi,1),"%")),vjust=-0.5) +
   theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold")) 
 
 #-------------------------------------------------------------------------------------------------------
 
-bajo2 <- porcentaje (Bajo, grupo2$País)
-medio_bajo2 <-porcentaje(Medio_Bajo, grupo2$País)
-medio_alto2 <- porcentaje(Medio_Alto, grupo2$País)
-alto2 <- porcentaje(Alto, grupo2$País)
+bajo2 <- calcularNivel (Bajo, grupo2$País)
+medio_bajo2 <-calcularNivel(Medio_Bajo, grupo2$País)
+medio_alto2 <- calcularNivel(Medio_Alto, grupo2$País)
+alto2 <- calcularNivel(Alto, grupo2$País)
 
 #Gráfico
-df2 <- data.frame(grupo = c("Alto","Bajo","Medio Bajo","Medio Alto"),
-                  n = c(alto2*100,bajo2*100,medio_bajo2*100,medio_alto2*100))
+tf2 <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
+                  ni = c(alto2,medio_alto2,medio_bajo2,bajo2),
+                  fi = c( (alto2/length(grupo2$País))*100,
+                          (medio_alto2/length(grupo2$País))*100,
+                          (medio_bajo2/length(grupo2$País))*100,
+                          (bajo2/length(grupo2$País))*100),
+                  Ni = c( alto2, alto2+medio_alto2, alto2+medio_alto2+medio_bajo2, alto2+medio_alto2+medio_bajo2+bajo2),
+                  Fi = c( (alto2/length(grupo2$País))*100,
+                          (alto2/length(grupo2$País))*100+(medio_alto2/length(grupo2$País))*100,
+                          (alto2/length(grupo2$País))*100+(medio_alto2/length(grupo2$País))*100+(medio_bajo2/length(grupo2$País))*100,
+                          (alto2/length(grupo2$País))*100+(medio_alto2/length(grupo2$País))*100+(medio_bajo2/length(grupo2$País))*100+(bajo2/length(grupo2$País))*100))
+
+
 
 x11()
-ggplot(df2, aes(x = grupo, y = n)) +
+ggplot(tf2, aes(x = nivel, y = fi)) +
   ggtitle("Grupo 2 - Iberoamerica") +
   geom_bar(stat = "identity", position = "dodge", colour="#12694c", fill=c("#009966","#49ca9f","#49ca9f","#009966")) +
   ylab("Porcentajes (%)") +
   xlab("Niveles") +
-  geom_text(aes(label=paste0(round(n,1),"%")),vjust=-0.5) +
+  geom_text(aes(label=paste0(round(fi,1),"%")),vjust=-0.5) +
   theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold")) 
 
 #-------------------------------------------------------------------------------------------------------
 
-bajo3 <- porcentaje (Bajo, grupo3$País)
-medio_bajo3 <-porcentaje(Medio_Bajo, grupo3$País)
-medio_alto3 <- porcentaje(Medio_Alto, grupo3$País)
-alto3 <- porcentaje(Alto, grupo3$País)
+bajo3 <- calcularNivel(Bajo, grupo3$País)
+medio_bajo3 <-calcularNivel(Medio_Bajo, grupo3$País)
+medio_alto3 <- calcularNivel(Medio_Alto, grupo3$País)
+alto3 <- calcularNivel(Alto, grupo3$País)
 
-df3 <- data.frame(grupo = c("Alto","Bajo","Medio Bajo","Medio Alto"),
-                  n = c(alto3*100,bajo3*100,medio_bajo3*100,medio_alto3*100))
+#Gráfico
+tf3 <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
+                  ni = c(alto3,medio_alto3,medio_bajo3,bajo3),
+                  fi = c( (alto3/length(grupo3$País))*100,
+                          (medio_alto3/length(grupo3$País))*100,
+                          (medio_bajo3/length(grupo3$País))*100,
+                          (bajo3/length(grupo3$País))*100),
+                  Ni = c( alto3, alto3+medio_alto3, alto3+medio_alto3+medio_bajo3, alto3+medio_alto3+medio_bajo3+bajo3),
+                  Fi = c( (alto3/length(grupo3$País))*100,
+                          (alto3/length(grupo3$País))*100+(medio_alto3/length(grupo3$País))*100,
+                          (alto3/length(grupo3$País))*100+(medio_alto3/length(grupo3$País))*100+(medio_bajo3/length(grupo3$País))*100,
+                          (alto3/length(grupo3$País))*100+(medio_alto3/length(grupo3$País))*100+(medio_bajo3/length(grupo3$País))*100+(bajo3/length(grupo3$País))*100))
 
 x11()
-ggplot(df3, aes(x = grupo, y = n)) +
-  ggtitle("Grupo 3 - Eo-na_japon_austr_nz") +
+ggplot(tf3, aes(x = nivel, y = fi)) +
+  ggtitle("Grupo 3 - EO_NA_JAPON_AUSTR_NZ") +
   geom_bar(stat = "identity", position = "dodge", colour="purple", fill=c("#b878f4","#cabbf2","#cabbf2","#b878f4")) +
   ylab("Porcentajes (%)") +
   xlab("Niveles") +
-  geom_text(aes(label=paste0(round(n,1),"%")),vjust=-0.5) +
+  geom_text(aes(label=paste0(round(fi,1),"%")),vjust=-0.5) +
   theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold"))
 
 #-------------------------------------------------------------------------------------------------------
 
-bajo4 <- porcentaje (Bajo, grupo4$País)
-medio_bajo4 <-porcentaje(Medio_Bajo, grupo4$País)
-medio_alto4 <- porcentaje(Medio_Alto, grupo4$País)
-alto4 <- porcentaje(Alto, grupo4$País)
+bajo4 <- calcularNivel(Bajo, grupo4$País)
+medio_bajo4 <-calcularNivel(Medio_Bajo, grupo4$País)
+medio_alto4 <- calcularNivel(Medio_Alto, grupo4$País)
+alto4 <- calcularNivel(Alto, grupo4$País)
 
-df4 <- data.frame(grupo = c("Alto","Bajo","Medio Bajo","Medio Alto"),
-                  n = c(alto4*100,bajo4*100,medio_bajo4*100,medio_alto4*100))
+#Gráfico
+tf4 <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
+                  ni = c(alto4,medio_alto4,medio_bajo4,bajo4),
+                  fi = c( (alto4/length(grupo4$País))*100,
+                          (medio_alto4/length(grupo4$País))*100,
+                          (medio_bajo4/length(grupo4$País))*100,
+                          (bajo4/length(grupo4$País))*100),
+                  Ni = c( alto4, alto4+medio_alto4, alto4+medio_alto4+medio_bajo4, alto4+medio_alto4+medio_bajo4+bajo4),
+                  Fi = c( (alto4/length(grupo4$País))*100,
+                          (alto4/length(grupo4$País))*100+(medio_alto4/length(grupo4$País))*100,
+                          (alto4/length(grupo4$País))*100+(medio_alto4/length(grupo4$País))*100+(medio_bajo4/length(grupo4$País))*100,
+                          (alto4/length(grupo4$País))*100+(medio_alto4/length(grupo4$País))*100+(medio_bajo4/length(grupo4$País))*100+(bajo4/length(grupo4$País))*100))
 
 x11()
-ggplot(df4, aes(x = grupo, y = n)) +
+ggplot(tf4, aes(x = nivel, y = fi)) +
   ggtitle("Grupo 4 - Oriente Medio") +
   geom_bar(stat = "identity", position = "dodge", colour="#12694c", fill=c("#009966","#49ca9f","#49ca9f","#009966")) +
   ylab("Porcentajes (%)") +
   xlab("Niveles") +
-  geom_text(aes(label=paste0(round(n,1),"%")),vjust=-0.5) +
+  geom_text(aes(label=paste0(round(fi,1),"%")),vjust=-0.5) +
   theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold"))
 
 #-------------------------------------------------------------------------------------------------------
 
-bajo5 <- porcentaje (Bajo, grupo5$País)
-medio_bajo5 <-porcentaje(Medio_Bajo, grupo5$País)
-medio_alto5 <- porcentaje(Medio_Alto, grupo5$País)
-alto5 <- porcentaje(Alto, grupo5$País)
+bajo5 <- calcularNivel (Bajo, grupo5$País)
+medio_bajo5 <-calcularNivel(Medio_Bajo, grupo5$País)
+medio_alto5 <- calcularNivel(Medio_Alto, grupo5$País)
+alto5 <- calcularNivel(Alto, grupo5$País)
 
-df5 <- data.frame(grupo = c("Alto","Bajo","Medio Bajo","Medio Alto"),
-                  n = c(alto5*100,bajo5*100,medio_bajo5*100,medio_alto5*100))
+#Gráfico
+tf5 <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
+                  ni = c(alto5,medio_alto5,medio_bajo5,bajo5),
+                  fi = c( (alto5/length(grupo5$País))*100,
+                          (medio_alto5/length(grupo5$País))*100,
+                          (medio_bajo5/length(grupo5$País))*100,
+                          (bajo5/length(grupo5$País))*100),
+                  Ni = c( alto5, alto5+medio_alto5, alto5+medio_alto5+medio_bajo5, alto5+medio_alto5+medio_bajo5+bajo5),
+                  Fi = c( (alto5/length(grupo5$País))*100,
+                          (alto5/length(grupo5$País))*100+(medio_alto5/length(grupo5$País))*100,
+                          (alto5/length(grupo5$País))*100+(medio_alto5/length(grupo5$País))*100+(medio_bajo5/length(grupo5$País))*100,
+                          (alto5/length(grupo5$País))*100+(medio_alto5/length(grupo5$País))*100+(medio_bajo5/length(grupo5$País))*100+(bajo5/length(grupo5$País))*100))
 
 x11()
-ggplot(df5, aes(x = grupo, y = n)) +
+ggplot(tf5, aes(x = nivel, y = fi)) +
   ggtitle("Grupo 5 - Asia") +
   geom_bar(stat = "identity", position = "dodge", colour="purple", fill=c("#b878f4","#cabbf2","#cabbf2","#b878f4")) +
   ylab("Porcentajes (%)") +
   xlab("Niveles") +
-  geom_text(aes(label=paste0(round(n,1),"%")),vjust=-0.5) +
+  geom_text(aes(label=paste0(round(fi,1),"%")),vjust=-0.5) +
   theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold"))
 
 #-------------------------------------------------------------------------------------------------------
 
-bajo6 <- porcentaje (Bajo, grupo6$País)
-medio_bajo6 <-porcentaje(Medio_Bajo, grupo6$País)
-medio_alto6 <- porcentaje(Medio_Alto, grupo6$País)
-alto6 <- porcentaje(Alto, grupo6$País)
+bajo6 <- calcularNivel(Bajo, grupo6$País)
+medio_bajo6 <-calcularNivel(Medio_Bajo, grupo6$País)
+medio_alto6 <- calcularNivel(Medio_Alto, grupo6$País)
+alto6 <- calcularNivel(Alto, grupo6$País)
 
-df6 <- data.frame(grupo = c("Alto","Bajo","Medio Bajo","Medio Alto"),
-                  n = c(alto6*100,bajo6*100,medio_bajo6*100,medio_alto6*100))
+#Gráfico
+tf6 <- data.frame(nivel = c("Alto","Medio Alto","Medio Bajo", "Bajo"),
+                  ni = c(alto6,medio_alto6,medio_bajo6,bajo6),
+                  fi = c( (alto2/length(grupo6$País))*100,
+                          (medio_alto6/length(grupo6$País))*100,
+                          (medio_bajo6/length(grupo6$País))*100,
+                          (bajo6/length(grupo6$País))*100),
+                  Ni = c( alto6, alto6+medio_alto6, alto6+medio_alto6+medio_bajo6, alto6+medio_alto6+medio_bajo6+bajo6),
+                  Fi = c( (alto6/length(grupo6$País))*100,
+                          (alto6/length(grupo6$País))*100+(medio_alto6/length(grupo6$País))*100,
+                          (alto6/length(grupo6$País))*100+(medio_alto6/length(grupo6$País))*100+(medio_bajo6/length(grupo6$País))*100,
+                          (alto6/length(grupo6$País))*100+(medio_alto6/length(grupo6$País))*100+(medio_bajo6/length(grupo6$País))*100+(bajo6/length(grupo6$País))*100))
 
 x11()
-ggplot(df6, aes(x = grupo, y = n)) +
+ggplot(tf6, aes(x = nivel, y = fi)) +
   ggtitle("Grupo 6 - África") +
   geom_bar(stat = "identity", position = "dodge", colour="#12694c", fill=c("#009966","#49ca9f","#49ca9f","#009966")) +
   ylab("Porcentajes (%)") +
   xlab("Niveles") +
-  geom_text(aes(label=paste0(round(n,1),"%")),vjust=-0.5) +
+  geom_text(aes(label=paste0(round(fi,1),"%")),vjust=-0.5) +
   theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold"))
