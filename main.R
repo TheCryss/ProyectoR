@@ -240,7 +240,7 @@ crearTablaFrecuencia <- function(alto, medio_alto, medio_bajo, bajo, grupo){
 crearGrafico <- function(tf,color1,color2,color3,titulo){
   g <- ggplot(tf, aes(x = nivel, y = fi)) +
     ggtitle(titulo) +
-    geom_bar(stat = "identity", position = "dodge", colour=color3, fill=c(color1,color2,color2,color1)) +
+    geom_bar(stat = "identity", position = "dodge", colour=color3, fill=c(color2,color2,color1,color1)) +
     ylab("Porcentajes (%)") +
     xlab("Niveles") +
     geom_text(aes(label=paste0(round(fi,1),"%")),vjust=-0.5) +
