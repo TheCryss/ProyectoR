@@ -237,7 +237,7 @@ crearTablaFrecuencia <- function(alto, medio_alto, medio_bajo, bajo, grupo){
   
 }
 
-# --- Función que crea gráficos específicos para esta función ---
+# --- Función que crea gráficos específicos para este proyecto ---
 crearGrafico <- function(tf,color1,color2,color3){
   g <- ggplot(tf, aes(x = nivel, y = fi)) +
     ggtitle("Grupo 1 - Europa Oriental") +
