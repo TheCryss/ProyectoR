@@ -1,9 +1,8 @@
-#numerical rules
-Tasa.natalidad >=0
-Tasa.mortalidad >=0
-Mortalidad.infantil >=0
-Esperanza.vida.hombre >=0
-Esperanza.vida.mujer >=0
-PNB >=0
-Población..miles. >=0
-
+# Numerical rules
+Tasa.natalidad >= 0
+Tasa.mortalidad >= 0
+Mortalidad.infantil >= 0
+Esperanza.vida.hombre >= 0
+Esperanza.vida.mujer >= 0
+PNB >= 0
+Población..miles. >= 0
