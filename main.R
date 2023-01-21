@@ -198,19 +198,19 @@ boxplot(my_data$`PNB per cápita`~my_data$Grupo,
 
 # ------------------------------------ 2.4 ----------------------------------- #
 
-PNBPerCapita <- my_data$`PNB per cápita`
+PNB_per_capita <- my_data$`PNB per cápita`
 
 # Obteniendo los diferente países en los respectivos niveles
-pos1 <- which(PNBPerCapita <= quantile(PNBPerCapita, prob = c(0.25)))
+pos1 <- which(PNB_per_capita <= quantile(PNB_per_capita, prob = c(0.25)))
 bajo <- my_data$País[pos1]
 
-pos2 <- which(PNBPerCapita > quantile(PNBPerCapita, prob = c(0.25)) & PNBPerCapita <= quantile(PNBPerCapita, prob = c(0.5)))
+pos2 <- which(PNB_per_capita > quantile(PNB_per_capita, prob = c(0.25)) & PNB_per_capita <= quantile(PNB_per_capita, prob = c(0.5)))
 medio_bajo <- my_data$País[pos2]
 
-pos3 <- which(PNBPerCapita > quantile(PNBPerCapita, prob = c(0.5)) & PNBPerCapita <= quantile(PNBPerCapita, prob = c(0.75)))
+pos3 <- which(PNB_per_capita > quantile(PNB_per_capita, prob = c(0.5)) & PNB_per_capita <= quantile(PNB_per_capita, prob = c(0.75)))
 medio_alto <- my_data$País[pos3]
 
-pos4 <- which(PNBPerCapita > quantile(PNBPerCapita, prob = c(0.75)))
+pos4 <- which(PNB_per_capita > quantile(PNB_per_capita, prob = c(0.75)))
 alto <- my_data$País[pos4]
 
 # Cargar librería para poder filtrar y seleccionar
@@ -218,23 +218,21 @@ library(dplyr)
 
 # Obteniendo los países de cada grupo
 grupos <- dplyr::select(my_data, Grupo, País)
-grupo1 <- dplyr::filter(grupos, Grupo == 1)
-grupo2 <- dplyr::filter(grupos, Grupo == 2)
-grupo3 <- dplyr::filter(grupos, Grupo == 3)
-grupo4 <- dplyr::filter(grupos, Grupo == 4)
-grupo5 <- dplyr::filter(grupos, Grupo == 5)
-grupo6 <- dplyr::filter(grupos, Grupo == 6)
+grupo1 <- dplyr::filter(grupos, Grupo == 1) # Europa Oriental
+grupo2 <- dplyr::filter(grupos, Grupo == 2) # Iberoamerica
+grupo3 <- dplyr::filter(grupos, Grupo == 3) # eo-na_japon_austr_nz
+grupo4 <- dplyr::filter(grupos, Grupo == 4) # Oriente Medio
+grupo5 <- dplyr::filter(grupos, Grupo == 5) # Asia
+grupo6 <- dplyr::filter(grupos, Grupo == 6) # Africa
 
 # --------------------------------- Funciones -------------------------------- #
 
-# --- Función que calcula el porcentaje de valores iguales en dos arreglos ---
-calcular_nivel <- function(vector_nivel, vector_grupo){
+# --- Función que calcula la cantidad de valores iguales en dos arreglos ---
+calcular_nivel <- function(vector_nivel, vector_grupo) {
     sum <- 0
     for(i in vector_nivel) {
         for(j in vector_grupo) {
-            if(j == i) {
-                sum <- sum + 1
-            }
+            if(j == i)  sum <- sum + 1
         }
     }
     return (sum)
@@ -274,13 +272,13 @@ crear_grafico <- function(tf, color1, color2, color3, titulo) {
                 geom_text(aes(label = paste0(round(fi, 1), "%")), vjust = -0.5) +
                 theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold")
                 )
-    return(g)
+    return (g)
 }
 
 # -------------------------------------------------------------------------- #
 
 # --- Haciendo uso de la función establecida anteriormente para obtener el porcentaje de los 4 niveles en cada grupo
-bajo1 <- calcular_nivel (bajo, grupo1$País)
+bajo1 <- calcular_nivel(bajo, grupo1$País)
 medio_bajo1 <- calcular_nivel(medio_bajo, grupo1$País)
 medio_alto1 <- calcular_nivel(medio_alto, grupo1$País)
 alto1 <- calcular_nivel(alto, grupo1$País)
@@ -292,9 +290,9 @@ tf1 <- crear_tabla_frecuencia(alto1, medio_alto1, medio_bajo1, bajo1, grupo1)
 x11()
 crear_grafico(tf1, "#b878f4", "#cabbf2", "purple", "Grupo 1 - Europa Oriental")
 
-#-------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------- #
 
-bajo2 <- calcular_nivel (bajo, grupo2$País)
+bajo2 <- calcular_nivel(bajo, grupo2$País)
 medio_bajo2 <- calcular_nivel(medio_bajo, grupo2$País)
 medio_alto2 <- calcular_nivel(medio_alto, grupo2$País)
 alto2 <- calcular_nivel(alto, grupo2$País)
@@ -308,7 +306,7 @@ crear_grafico(tf2, "#009966", "#49ca9f", "#12694c", "Grupo 2 - Iberoamérica")
 
 #-------------------------------------------------------------------------------------------------------
 
-bajo3 <- calcular_nivel (bajo, grupo3$País)
+bajo3 <- calcular_nivel(bajo, grupo3$País)
 medio_bajo3 <- calcular_nivel(medio_bajo, grupo3$País)
 medio_alto3 <- calcular_nivel(medio_alto, grupo3$País)
 alto3 <- calcular_nivel(alto, grupo3$País)
@@ -322,7 +320,7 @@ crear_grafico(tf3,"#3d85c6","#67afef", "#236cae", "Grupo 3 - EO_NA_JAPON_AUSTR_N
 
 #-------------------------------------------------------------------------------------------------------
 
-bajo4 <- calcular_nivel (bajo, grupo4$País)
+bajo4 <- calcular_nivel(bajo, grupo4$País)
 medio_bajo4 <- calcular_nivel(medio_bajo, grupo4$País)
 medio_alto4 <- calcular_nivel(medio_alto, grupo4$País)
 alto4 <- calcular_nivel(alto, grupo4$País)
@@ -336,7 +334,7 @@ crear_grafico(tf4, "#009966", "#49ca9f", "#12694c", "Grupo 4 - Oriente Medio")
 
 #-------------------------------------------------------------------------------------------------------
 
-bajo5 <- calcular_nivel (bajo, grupo5$País)
+bajo5 <- calcular_nivel(bajo, grupo5$País)
 medio_bajo5 <-calcular_nivel(medio_bajo, grupo5$País)
 medio_alto5 <- calcular_nivel(medio_alto, grupo5$País)
 alto5 <- calcular_nivel(alto, grupo5$País)
@@ -350,7 +348,7 @@ crear_grafico(tf5, "#b878f4", "#cabbf2", "purple", "Grupo 5 - Asia")
 
 #-------------------------------------------------------------------------------------------------------
 
-bajo6 <- calcular_nivel (bajo, grupo6$País)
+bajo6 <- calcular_nivel(bajo, grupo6$País)
 medio_bajo6 <-calcular_nivel(medio_bajo, grupo6$País)
 medio_alto6 <- calcular_nivel(medio_alto, grupo6$País)
 alto6 <- calcular_nivel(alto, grupo6$País)

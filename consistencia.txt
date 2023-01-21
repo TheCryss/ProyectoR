@@ -5,4 +5,4 @@ Mortalidad.infantil >= 0
 Esperanza.vida.hombre >= 0
 Esperanza.vida.mujer >= 0
 PNB >= 0
-Población..miles. >= 0
+Población..miles. >= 0ss
